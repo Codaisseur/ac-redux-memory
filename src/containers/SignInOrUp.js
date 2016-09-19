@@ -11,6 +11,7 @@ import api from 'feathersjs-redux-model/build/middleware/api'
 import setFormErrors from '../actions/set-form-errors'
 import resetFormErrors from '../actions/reset-form-errors'
 import appLoading from '../actions/app-loading'
+import updateCurrentUser from '../actions/update-current-user'
 
 const errorMargin = {
   marginTop: '2rem'
@@ -82,7 +83,7 @@ class SignInOrUp extends Component {
   }
 
   signInUser() {
-    const { appLoading } = this.props
+    const { appLoading, updateCurrentUser, setFormErrors } = this.props
     const { email, password } = this.formValues()
 
     appLoading(true)
@@ -90,10 +91,16 @@ class SignInOrUp extends Component {
     api.authenticate({ email, password })
       .then((response) => {
         appLoading(false)
-        setCurrentUser(response.data)
+        updateCurrentUser(response.data)
       }).catch((error) => {
         appLoading(false)
-        debugger
+        if (error.code === 401) {
+          setFormErrors({
+            email: error.message
+          })
+        } else {
+          console.error('Error signing in!', error)
+        }
       })
   }
 
@@ -163,4 +170,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { setFormErrors, resetFormErrors, appLoading })(SignInOrUp)
+export default connect(mapStateToProps, {
+  setFormErrors, resetFormErrors, appLoading, updateCurrentUser })(SignInOrUp)
