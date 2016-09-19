@@ -6,6 +6,7 @@ import api from 'feathersjs-redux-model/build/middleware/api'
 
 import Loader from './components/Loader'
 import SignInOrUp from './containers/SignInOrUp'
+import Lobby from './containers/Lobby'
 import removeCurrentUser from './actions/remove-current-user'
 
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
           <div>
             <p>Hi { username }</p>
             <button onClick={this.signOutUser.bind(this)}>Sign out</button>
+            <Lobby />
           </div>
             : <SignInOrUp /> }
       </div>

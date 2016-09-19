@@ -7,7 +7,7 @@ export default function updateCurrentUser(
   switch (type) {
     case UPDATE_CURRENT_USER :
       localStorage.setItem('memoryUser', JSON.stringify(payload))
-      return payload
+      return Object.assign({}, payload)
 
     case SIGN_OUT_USER :
       localStorage.removeItem('memoryUser')

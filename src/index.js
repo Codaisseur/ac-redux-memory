@@ -5,6 +5,7 @@ import { render } from 'react-dom';
 // convenient bindings with React.
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -16,6 +17,7 @@ const reducer = combineReducers(reducers);
 // Use the Redux devToolsExtension to visualize the Redux Store.
 const devTools = window.devToolsExtension ? window.devToolsExtension() : (f) => f;
 const enhancer = compose(
+  applyMiddleware(ReduxThunk),
   devTools
 );
 
