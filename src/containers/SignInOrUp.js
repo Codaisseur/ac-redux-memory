@@ -83,8 +83,10 @@ class SignInOrUp extends Component {
   }
 
   signInUser() {
-    const { appLoading, updateCurrentUser, setFormErrors } = this.props
+    const { appLoading, updateCurrentUser, setFormErrors, resetFormErrors } = this.props
     const { email, password } = this.formValues()
+
+    resetFormErrors()
 
     appLoading(true)
 
